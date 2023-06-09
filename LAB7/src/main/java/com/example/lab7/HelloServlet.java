@@ -1,4 +1,4 @@
-package com.example.lab7_20206438_20206331;
+package com.example.lab7;
 
 import java.io.*;
 
