@@ -1,26 +1,21 @@
 package com.example.lab7;
 
 import java.io.*;
+import java.util.ArrayList;
 
+import jakarta.servlet.RequestDispatcher;
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
-@WebServlet(name = "helloServlet", value = "/hello-servlet")
+@WebServlet(name = "helloServlet", value = {"/hello-servlet",""})
 public class HelloServlet extends HttpServlet {
-    private String message;
 
-    public void init() {
-        message = "Hello World!";
-    }
-
-    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-        response.setContentType("text/html");
-
-        // Hello
-        PrintWriter out = response.getWriter();
-        out.println("<html><body>");
-        out.println("<h1>" + message + "</h1>");
-        out.println("</body></html>");
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+        //TourDao tourDao = new TourDao();
+        //ArrayList<Tour> listaTours = tourDao.obtenerListaTours();
+        RequestDispatcher view =request.getRequestDispatcher("index.jsp");
+        view.forward(request,response);
     }
 
     public void destroy() {

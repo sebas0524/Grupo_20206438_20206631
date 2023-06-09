@@ -10,7 +10,7 @@ public abstract class BaseDao {
         }
         String url = "jdbc:mysql://localhost:3306/lab7";
         String user = "root";
-        String pass = "123456";
+        String pass = "root";
 
         return DriverManager.getConnection(url,user,pass);
     }
