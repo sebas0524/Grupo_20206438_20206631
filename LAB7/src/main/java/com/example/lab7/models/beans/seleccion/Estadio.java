@@ -1,9 +1,12 @@
 package com.example.lab7.models.beans.seleccion;
 
-public class Seleccion {
+public class Estadio {
     private int idSeleccion;
     private String nombre;
     private String tecnico;
-    private Estadio estadio;
-    
+    private int estadios_idEstadios;
+
+
+
+
 }
