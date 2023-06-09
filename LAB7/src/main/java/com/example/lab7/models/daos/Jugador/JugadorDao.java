@@ -14,9 +14,8 @@ public class JugadorDao extends BaseDao {
 
     public ArrayList<Jugador> listarJugadores(){
         ArrayList<Jugador> lista=new ArrayList<>();
-        String sql="SELECT idJugador, j.nombre, edad,posicion,club,s.nombre from jugador j\n" +
-                "inner join seleccion s on j.sn_idSeleccion=s.idSeleccion\n" +
-                "where j.idJugador=? ";
+        String sql="SELECT idJugador, j.nombre, edad,posicion,club,s.nombre as \"seleccion\"  from jugador j\n" +
+                "inner join seleccion s on j.sn_idSeleccion=s.idSeleccion\n";
 
         try(Connection connection=this.getConnection();
         Statement stmt= connection.createStatement();
@@ -31,10 +30,10 @@ public class JugadorDao extends BaseDao {
                 jugador.setClub(resultSet.getString(5));
 
                 Seleccion seleccion=new Seleccion();
-                seleccion.setIdSeleccion(resultSet.getInt("s.idSeleccion"));
-                seleccion.setNombre(resultSet.getString("s.nombre"));
+                //seleccion.setIdSeleccion(resultSet.getInt("s.idSeleccion"));
+                seleccion.setNombre(resultSet.getString("seleccion"));
                 //ESTA ES OTRA OPCION QUE SE PODRIA UTILIZAR.
-                //Seleccion seleccion=new Selecicon(resultSet.getInt("s.idSeleccion"),resultSet.getString("s.nombre"));
+                //Seleccion seleccion=new Seleccion(resultSet.getInt("s.idSeleccion"),resultSet.getString("s.nombre"));
 
                 jugador.setSelecion(seleccion);
 

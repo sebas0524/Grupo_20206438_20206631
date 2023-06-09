@@ -11,6 +11,7 @@ public class Seleccion {
     private ArrayList<Partido> partido;
     private String partidoProximo;
 
+
     public ArrayList<Partido> getPartido() {
         return partido;
     }
