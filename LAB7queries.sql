@@ -25,3 +25,32 @@ inner join seleccion s on j.sn_idSeleccion = s.idSeleccion;
 #*Para buscar el primer partido, debe buscar los partidos de la selección (ya sea local o visitante), 
 #ordenarlos por fecha y obtener el primero. En la lista, el primer partido se debe ver con este formato:
 #seleccionLocal vs seleccionVisitante
+
+
+
+
+
+
+use lab7;
+#SELECCIONES
+select s.idSeleccion, s.nombre, s.tecnico, e.nombre, concat(sl.nombre," vs ",sv.nombre) from seleccion s
+inner join estadio e on s.estadio_idEstadio = e.idEstadio
+inner join partido p on p.seleccionLocal = s.idSeleccion or p.seleccionVisitante = s.idSeleccion
+inner join seleccion sl on sl.idSeleccion = p.seleccionLocal
+inner join seleccion sv on sv.idSeleccion = p.seleccionVisitante
+order by p.fecha asc;
+select * from partido;
+
+
+select * from partido p order by fecha asc;
+
+
+
+
+
+
+
+
+
+
+
