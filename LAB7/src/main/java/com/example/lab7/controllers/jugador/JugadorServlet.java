@@ -33,14 +33,34 @@ public class JugadorServlet extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         JugadorDao jugadorDao=new JugadorDao();
+        //Seleccion seleccion=new Seleccion();
         Jugador jugador =parseJugador(request);
+
+        if(jugador != null){
+            boolean centinela =false;
+            for(Jugador jugador1: jugadorDao.listarJugadores()){
+                if((jugador.getNombre().equals(jugador1.getNombre())) && ((jugador.getSelecion().getNombre()) == (jugador1.getSelecion().getNombre()))){
+                    centinela=true;
+                }
+            }
+            if(!centinela){
+                jugadorDao.crearJugador(jugador);
+                response.sendRedirect(request.getContextPath() + "/JugadorServlet");
+            }
+            else{
+                response.sendRedirect(request.getContextPath() + "/JugadorServlet?a=crearJugador");
+            }
+
+        }else{
+            response.sendRedirect(request.getContextPath() + "/JugadorServlet?a=crearJugador");
+        }
         jugadorDao.crearJugador(jugador);
     }
     public Jugador parseJugador(HttpServletRequest request){
         Jugador jugador = new Jugador();
         Seleccion seleccion=new Seleccion();
 
-        String idJugadorStr =request.getParameter("idJugador")!=null ? request.getParameter("idJugador") : "";
+        //String idJugadorStr =request.getParameter("idJugador")!=null ? request.getParameter("idJugador") : "";
         String nombre=request.getParameter("nombre");
         String edadStr=request.getParameter("edad");
         String posicion=request.getParameter("posicion");
@@ -49,9 +69,9 @@ public class JugadorServlet extends HttpServlet {
         seleccion.setNombre(seleccion1);
 
         try{
-            int idJugador=Integer.parseInt(idJugadorStr);
+            //int idJugador=Integer.parseInt(idJugadorStr);
             int edad=Integer.parseInt(edadStr);
-            jugador.setIdJugador(idJugador);
+            //jugador.setIdJugador(idJugador);
             jugador.setNombre(nombre);
             jugador.setEdad(edad);
             jugador.setPosicion(posicion);
@@ -60,10 +80,7 @@ public class JugadorServlet extends HttpServlet {
 
             return jugador;
         }catch (NumberFormatException e){
-
+            return null;
         }
-        return jugador;
-
-
     }
 }
