@@ -38,8 +38,8 @@ public class JugadorServlet extends HttpServlet {
 
         if(jugador!=null){
             boolean centinela=false;
-            for(Jugador jugador1:jugadorDao.listarJugadores()){
-                if((jugador.getNombre().equals(jugador1.getNombre())) && ((jugador.getSelecion().getNombre()) == (jugador1.getSelecion().getNombre()))){
+            for(Jugador jugador1:jugadorDao.listarJugadores()  ){
+                if((jugador.getNombre().equals(jugador1.getNombre())) && (jugador.getSelecion().getIdSeleccion() == jugador1.getSelecion().getIdSeleccion())){
                     centinela=true;
                 }
             }
@@ -64,7 +64,7 @@ public class JugadorServlet extends HttpServlet {
         String posicion=request.getParameter("posicion");
         String club=request.getParameter("club");
         String seleccion1=request.getParameter("seleccion");
-        seleccion.setNombre(seleccion1);
+        seleccion.setIdSeleccion(Integer.parseInt(seleccion1));
 
         try{
            // int idJugador=Integer.parseInt(idJugadorStr);
