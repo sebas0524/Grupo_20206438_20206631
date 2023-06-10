@@ -10,19 +10,26 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class SeleccionDao extends BaseDao {
-    public ArrayList<Seleccion> listarSelecciones() {
+    public ArrayList<Seleccion> listarSeleccionesFechas() {
         ArrayList<Seleccion> lista = new ArrayList<>();
 
-        String sql = "select ( s.idSeleccion) as \"ID\" , s.nombre, s.tecnico, e.idEstadio, e.nombre as \"estadio\", concat(sl.nombre,\" vs \",sv.nombre) as \"Partido\",\n" +
-                "\t\tp.idPartido,p.fecha,p.seleccionLocal,p.seleccionVisitante\n" +
-                " from seleccion s\n" +
+        String sql = "select s.idSeleccion as \"ID\", s.nombre, s.tecnico, e.idEstadio, e.nombre as \"estadio\",\n" +
+                "       concat(sl.nombre, \" vs \", sv.nombre) as \"Partido\", p.idPartido, p.fecha, p.seleccionLocal, p.seleccionVisitante\n" +
+                "from seleccion s\n" +
                 "inner join estadio e on s.estadio_idEstadio = e.idEstadio\n" +
-                "inner join partido p on p.seleccionLocal = s.idSeleccion or p.seleccionVisitante = s.idSeleccion\n" +
+                "inner join partido p on p.seleccionLocal = s.idSeleccion OR p.seleccionVisitante = s.idSeleccion\n" +
                 "inner join seleccion sl on sl.idSeleccion = p.seleccionLocal\n" +
                 "inner join seleccion sv on sv.idSeleccion = p.seleccionVisitante\n" +
-                "where p.fecha = (\n" +
-                "    select min(fecha) from partido\n" +
-                "    where seleccionLocal = s.idSeleccion or seleccionVisitante = s.idSeleccion\n" +
+                "where p.fecha = (select MIN(fecha) FROM partido\n" +
+                "                 where seleccionLocal = s.idSeleccion OR seleccionVisitante = s.idSeleccion)\n" +
+                "union\n" +
+                "select s.idSeleccion as \"ID\", s.nombre, s.tecnico, e.idEstadio, e.nombre as \"estadio\",\n" +
+                "       null as \"Partido\", null as idPartido, null as fecha, null as seleccionLocal, null as seleccionVisitante\n" +
+                "from seleccion s\n" +
+                "inner join estadio e on s.estadio_idEstadio = e.idEstadio\n" +
+                "where not exists (\n" +
+                "    select 1 from partido p\n" +
+                "    where p.seleccionLocal = s.idSeleccion or p.seleccionVisitante = s.idSeleccion\n" +
                 ");";
         try (Connection connection = this.getConnection();
              Statement stmt = connection.createStatement();
@@ -51,7 +58,52 @@ public class SeleccionDao extends BaseDao {
         return lista;
     }
 
+    public ArrayList<Seleccion> listarSelecciones() {
+        ArrayList<Seleccion> lista = new ArrayList<>();
 
+        String sql = "select * from estadio;\n" +
+                "select idSeleccion,s.nombre,tecnico,idEstadio,e.nombre from seleccion s\n" +
+                "inner join estadio e on s.estadio_idEstadio = e.idEstadio;";
+        try (Connection connection = this.getConnection();
+             Statement stmt = connection.createStatement();
+             ResultSet resultSet = stmt.executeQuery(sql)) {
+            while (resultSet.next()) {
+                Seleccion seleccion = new Seleccion();
+                seleccion.setIdSeleccion(resultSet.getInt("idSeleccion"));
+                seleccion.setNombre(resultSet.getString("nombre"));
+                seleccion.setTecnico(resultSet.getString("tecnico"));
+                Estadio estadio = new Estadio(resultSet.getInt("idEstadio"),resultSet.getString("estadio"));
+                seleccion.setEstadio(estadio);
+/*
+                Partido partido = new Partido(resultSet.getInt("idPartido"),resultSet.getDate("fecha"),
+                        resultSet.getInt("seleccionLocal"),resultSet.getInt("seleccionVisitante"));*/
+                //ArrayList<Partido> listaPartidos = new ArrayList<>();
+                //listaPartidos.add(partido);
+                seleccion.setPartidoProximo(resultSet.getString("Partido"));
+                lista.add(seleccion);
+            }
+
+        } catch (SQLException e) {
+            System.out.println("No se pudo conectar");
+            throw new RuntimeException(e);
+        }
+        return lista;
+    }
+
+    public void crearSeleccion(Seleccion seleccion){
+        String sql = "insert into seleccion ( nombre, tecnico, estadio_idEstadio)\n" +
+                "values (?,?,?)";
+        try (Connection connection = this.getConnection();
+             PreparedStatement pstmt = connection.prepareStatement(sql)) {
+            pstmt.setString(1, seleccion.getNombre());
+            pstmt.setString(2,seleccion.getTecnico());
+            pstmt.setInt(3,seleccion.getIdEstadio());
+            pstmt.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
 /*
     public ArrayList<Carrito> listarSelecciones(){
         ArrayList<Carrito> lista = new ArrayList<>();

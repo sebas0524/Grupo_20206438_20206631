@@ -13,7 +13,9 @@ public class SeleccionServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         SeleccionDao seleccionDa = new SeleccionDao();
-        request.setAttribute("listaSeleccion",seleccionDa.listarSelecciones());
+        request.setAttribute("listaSeleccionFechas",seleccionDa.listarSeleccionesFechas());
+        //request.setAttribute("listaSeleccion",seleccionDa.listarSeleccionesFechas());
+
         request.getRequestDispatcher("seleccion.jsp").forward(request, response);
     }
 

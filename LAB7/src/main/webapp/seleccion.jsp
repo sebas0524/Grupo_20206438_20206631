@@ -8,7 +8,7 @@
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
-<%  ArrayList<Seleccion> listaSeleccion = (ArrayList<Seleccion>) request.getAttribute("listaSeleccion"); %>
+<%  ArrayList<Seleccion> listaSeleccion = (ArrayList<Seleccion>) request.getAttribute("listaSeleccionFechas"); %>
 <html>
 <jsp:include page="/static/head.jsp">
   <jsp:param name="title" value="Lista de Selecciones"/>
@@ -21,7 +21,7 @@
   <div class="pb-5 pt-4 px-3 titlecolor">
     <div class="col-lg-6">
       <h1 class='text-light'>Selecciones del mundial</h1>
-      <a type="button" class="btn btn-warning" href="<%=request.getContextPath()%>/">Crear Nueva Playlist</a>
+      <a type="button" class="btn btn-warning" href="<%=request.getContextPath()%>/creaSeleccion">Registra una nueva seleccion</a>
     </div>
   </div>
   <div class="tabla">

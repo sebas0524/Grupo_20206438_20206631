@@ -11,6 +11,15 @@ public class Seleccion {
     private ArrayList<Partido> partido;
     private String partidoProximo;
 
+    private int idEstadio;
+
+    public int getIdEstadio() {
+        return idEstadio;
+    }
+
+    public void setIdEstadio(int idEstadio) {
+        this.idEstadio = idEstadio;
+    }
 
     public ArrayList<Partido> getPartido() {
         return partido;
