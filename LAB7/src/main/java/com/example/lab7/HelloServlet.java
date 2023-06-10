@@ -3,6 +3,7 @@ package com.example.lab7;
 import java.io.*;
 import java.util.ArrayList;
 
+import com.example.lab7.models.daos.Jugador.JugadorDao;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.*;
@@ -12,10 +13,9 @@ import jakarta.servlet.annotation.*;
 public class HelloServlet extends HttpServlet {
 
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-        //TourDao tourDao = new TourDao();
-        //ArrayList<Tour> listaTours = tourDao.obtenerListaTours();
-        RequestDispatcher view =request.getRequestDispatcher("index.jsp");
-        view.forward(request,response);
+        JugadorDao jugadorDao=new JugadorDao();
+        request.setAttribute("indexJugador",jugadorDao.listarJugadores());
+        request.getRequestDispatcher("index.jsp").forward(request,response);
     }
 
     public void destroy() {

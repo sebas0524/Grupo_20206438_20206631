@@ -4,10 +4,7 @@ import com.example.lab7.models.beans.jugador.Jugador;
 import com.example.lab7.models.beans.seleccion.Seleccion;
 import com.example.lab7.models.daos.BaseDao;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class JugadorDao extends BaseDao {
@@ -34,12 +31,9 @@ public class JugadorDao extends BaseDao {
                 seleccion.setNombre(resultSet.getString("seleccion"));
                 //ESTA ES OTRA OPCION QUE SE PODRIA UTILIZAR.
                 //Seleccion seleccion=new Seleccion(resultSet.getInt("s.idSeleccion"),resultSet.getString("s.nombre"));
-
                 jugador.setSelecion(seleccion);
 
                 lista.add(jugador);
-
-
 
             }
         }
@@ -48,8 +42,18 @@ public class JugadorDao extends BaseDao {
         }
         return lista;
     }
+    public void crearJugador(Jugador jugador){
+
+        /*
+        String sql=
+        try(Connection connection=this.getConnection();
+        PreparedStatement pstmt= connection.prepareStatement()){
 
 
-
-
+        }
+        catch (SQLException e){
+            throw new RuntimeException(e);
+        }
+         */
+    }
 }

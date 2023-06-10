@@ -55,9 +55,7 @@
         <td>
           <%=jugador.getSelecion().getNombre()%>
         </td>
-        <td>
-          <a><a type="button" class="btn btn-danger" href="<%=request.getContextPath()%>/listaSelecciones">eliminar</a></a>
-        </td>
+
       </tr>
       <%
         }
