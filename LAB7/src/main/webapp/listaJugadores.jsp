@@ -21,7 +21,7 @@
   <div class="pb-5 pt-4 px-3 titlecolor">
     <div class="col-lg-6">
       <h1 class='text-light'>Lista de Jugadores</h1>
-      <a type="button" class="btn btn-warning" href="<%=request.getContextPath()%>/">Crear Nueva Playlist</a>
+      <a class="btn btn-success" href="<%=request.getContextPath()%>/JobServlet?a=crear">Registrar Nuevo Jugador</a>
     </div>
   </div>
   <div class="tabla">

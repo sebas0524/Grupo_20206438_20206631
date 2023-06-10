@@ -27,14 +27,10 @@ public class JugadorDao extends BaseDao {
                 jugador.setClub(resultSet.getString(5));
 
                 Seleccion seleccion=new Seleccion();
-                //seleccion.setIdSeleccion(resultSet.getInt("s.idSeleccion"));
                 seleccion.setNombre(resultSet.getString("seleccion"));
-                //ESTA ES OTRA OPCION QUE SE PODRIA UTILIZAR.
-                //Seleccion seleccion=new Seleccion(resultSet.getInt("s.idSeleccion"),resultSet.getString("s.nombre"));
                 jugador.setSelecion(seleccion);
 
                 lista.add(jugador);
-
             }
         }
         catch (SQLException e){
@@ -44,16 +40,22 @@ public class JugadorDao extends BaseDao {
     }
     public void crearJugador(Jugador jugador){
 
-        /*
-        String sql=
+        String sql = "INSERT INTO jugador (idJugador,nombre,edad,posicion,club,sn_idSeleccion) VALUES (?,?,?,?,?)";
         try(Connection connection=this.getConnection();
-        PreparedStatement pstmt= connection.prepareStatement()){
+        PreparedStatement pstmt= connection.prepareStatement(sql)){
 
+            pstmt.setInt(1,jugador.getIdJugador());
+            pstmt.setString(2,jugador.getNombre());
+            pstmt.setInt(3,jugador.getEdad());
+            pstmt.setString(4,jugador.getPosicion());
+            pstmt.setString(5,jugador.getClub());
+            pstmt.setString(6,jugador.getSelecion().getNombre());
 
+            pstmt.executeUpdate();
         }
         catch (SQLException e){
             throw new RuntimeException(e);
         }
-         */
+
     }
 }

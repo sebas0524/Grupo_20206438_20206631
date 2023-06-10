@@ -22,11 +22,10 @@ public class JugadorServlet extends HttpServlet {
             request.getRequestDispatcher("listaJugadores.jsp").forward(request,response);
                 break;
             case "crearJugador":
-                request.getRequestDispatcher("/nuevoJugador.jsp").forward(request,response);
+                request.getRequestDispatcher("nuevoJugador.jsp").forward(request,response);
                 break;
         }
     }
-
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
