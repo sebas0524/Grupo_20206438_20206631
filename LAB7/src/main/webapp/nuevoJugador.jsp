@@ -1,4 +1,5 @@
-<%--
+<%@ page import="com.example.lab7.models.beans.jugador.Jugador" %>
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: sebas
   Date: 9/06/2023
@@ -6,6 +7,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<% ArrayList<Jugador> listaJugador = (ArrayList<Jugador>) request.getAttribute("listaJugador");%>
 
 <html>
 <jsp:include page="/static/head.jsp">
@@ -42,10 +44,11 @@
             <div class="form-group">
                 <label for="seleccion">Selección</label>
                 <select  name="seleccion" id="seleccion" class="form-control">
-                    <% for (Jugador jugador : listaSelecciones) {%>
-                    <option value="<%=%>"
+                    <% for (Jugador jugador : listaJugador) {%>
+                    <option value="<%=jugador.getSelecion().getIdSeleccion()%>"><%=jugador.getSelecion().getNombre()%>
+                    </option>
+                    <%}%>
                 </select>
-                <input type="text" class="form-control" name="seleccion" id="seleccion">
             </div>
             <a class="btn btn-danger" href="<%=request.getContextPath()%>/JobServlet">Cancelar</a>
             <button type="submit" class="btn btn-primary">Enviar</button>
