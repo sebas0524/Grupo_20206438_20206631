@@ -3,6 +3,7 @@ package com.example.lab7.controllers.jugador;
 import com.example.lab7.models.beans.jugador.Jugador;
 import com.example.lab7.models.beans.seleccion.Seleccion;
 import com.example.lab7.models.daos.Jugador.JugadorDao;
+import com.example.lab7.models.daos.seleccion.SeleccionDao;
 import jakarta.servlet.*;
 import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
@@ -14,6 +15,7 @@ public class JugadorServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         JugadorDao jugadorDao=new JugadorDao();
+        SeleccionDao seleccionDao=new SeleccionDao();
         String action=request.getParameter("a")==null ? "listarJugadores":request.getParameter("a");
 
         switch(action){
@@ -22,6 +24,7 @@ public class JugadorServlet extends HttpServlet {
             request.getRequestDispatcher("listaJugadores.jsp").forward(request,response);
                 break;
             case "crearJugador":
+                request.setAttribute("listaSelecciones",seleccionDao.listarSelecciones());
                 request.getRequestDispatcher("nuevoJugador.jsp").forward(request,response);
                 break;
         }

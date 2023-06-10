@@ -1,5 +1,6 @@
 <%@ page import="com.example.lab7.models.beans.jugador.Jugador" %>
-<%@ page import="java.util.ArrayList" %><%--
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="com.example.lab7.models.beans.seleccion.Seleccion" %><%--
   Created by IntelliJ IDEA.
   User: sebas
   Date: 9/06/2023
@@ -7,7 +8,7 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<% ArrayList<Jugador> listaJugador = (ArrayList<Jugador>) request.getAttribute("listaJugador");%>
+<% ArrayList<Seleccion> lista = (ArrayList<Seleccion>) request.getAttribute("listaSelecciones");%>
 
 <html>
 <jsp:include page="/static/head.jsp">
@@ -19,39 +20,39 @@
         <jsp:param name="page" value="jugadores"/>
     </jsp:include>
     <div class="container">
-        <h1 class='mb-3'>Crear un nuevo trabajo</h1>
+        <h1 style="color:white;" class='mb-3'>Crear un nuevo trabajo</h1>
         <form method="POST" action="<%=request.getContextPath()%>/JugadorServlet">
-            <div class="mb-3">
-                <label for="idJugador">ID Jugador</label>
+            <!--<div class="mb-3">
+                <label style="color:white;" for="idJugador">ID Jugador </label>
                 <input type="text" class="form-control" name="idJugador" id="idJugador">
-            </div>
+            </div> -->
             <div class="mb-3">
-                <label for="nombre">Nombre</label>
+                <label style="color:white;" for="nombre">Nombre</label>
                 <input type="text" class="form-control" name="nombre" id="nombre">
             </div>
             <div class="mb-3">
-                <label for="edad">Edad</label>
+                <label style="color:white;" for="edad">Edad</label>
                 <input type="text" class="form-control" name="edad" id="edad">
             </div>
             <div class="mb-3">
-                <label for="posicion">Posicion</label>
+                <label style="color:white;" for="posicion">Posición</label>
                 <input type="text" class="form-control" name="posicion" id="posicion">
             </div>
             <div class="mb-3">
-                <label for="club">Club</label>
+                <label style="color:white;" for="club">Club</label>
                 <input type="text" class="form-control" name="club" id="club">
             </div>
             <div class="form-group">
-                <label for="seleccion">Selección</label>
+                <label style="color:white;" for="seleccion">Selección</label>
                 <select  name="seleccion" id="seleccion" class="form-control">
-                    <% for (Jugador jugador : listaJugador) {%>
-                    <option value="<%=jugador.getSelecion().getIdSeleccion()%>"><%=jugador.getSelecion().getNombre()%>
+                    <% for (Seleccion seleccion : lista) {%>
+                    <option value="<%=seleccion.getIdSeleccion()%>"><%=seleccion.getNombre()%>
                     </option>
                     <%}%>
                 </select>
             </div>
-            <a class="btn btn-danger" href="<%=request.getContextPath()%>/JobServlet">Cancelar</a>
-            <button type="submit" class="btn btn-primary">Enviar</button>
+            <a class="btn btn-danger" href="<%=request.getContextPath()%>/JugadorServlet">Cancelar</a>
+            <button type="submit" class="btn btn-primary">Guardar cambios</button>
         </form>
     </div>
 
