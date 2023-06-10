@@ -40,16 +40,16 @@ public class JugadorDao extends BaseDao {
     }
     public void crearJugador(Jugador jugador){
 
-        String sql = "INSERT INTO jugador (idJugador,nombre,edad,posicion,club,sn_idSeleccion) VALUES (?,?,?,?,?)";
+        String sql = "INSERT INTO jugador (nombre,edad,posicion,club,sn_idSeleccion) VALUES (?,?,?,?,?)";
         try(Connection connection=this.getConnection();
         PreparedStatement pstmt= connection.prepareStatement(sql)){
 
-            pstmt.setInt(1,jugador.getIdJugador());
-            pstmt.setString(2,jugador.getNombre());
-            pstmt.setInt(3,jugador.getEdad());
-            pstmt.setString(4,jugador.getPosicion());
-            pstmt.setString(5,jugador.getClub());
-            pstmt.setString(6,jugador.getSelecion().getNombre());
+            //pstmt.setInt(1,jugador.getIdJugador());
+            pstmt.setString(1,jugador.getNombre());
+            pstmt.setInt(2,jugador.getEdad());
+            pstmt.setString(3,jugador.getPosicion());
+            pstmt.setString(4,jugador.getClub());
+            pstmt.setString(5,jugador.getSelecion().getNombre());
 
             pstmt.executeUpdate();
         }
